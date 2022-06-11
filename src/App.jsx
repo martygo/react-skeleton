@@ -1,12 +1,39 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+
+
+import './index.css';
+
+import Card from "./Card";
+import Skeleton from "./Skeleton";
 
 function App() {
+  const [posts, setPosts] = useState([]);
+  const [isEmpty, setIsEmpty] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((response) => response.json())
+        .then((data) => {
+          setPosts(data);
+          setIsEmpty(false);
+        })
+        .catch((err) => console.log(err));
+    }, 3000);
+  }, []);
+
+
   return (
-    <div className="App">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores, sapiente! Exercitationem earum, cum a maxime quis adipisci cumque nihil veritatis odit blanditiis distinctio quasi minus consequatur, asperiores nemo, obcaecati quisquam.
-    </div>
+    <>
+      <h1>Posts</h1>
+      { isEmpty && [1, 2, 3, 4].map((value) => <Skeleton key={value} />)}
+      {
+        isEmpty ||
+          posts.map((post) => (
+            <Card key={post.id} title={post.title} body={post.body} />
+          ))
+      }
+    </>
   )
 }
 
