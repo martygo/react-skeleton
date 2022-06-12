@@ -2,6 +2,8 @@
 
 **demo:** https://react-skeleton-eight.vercel.app/
 
+![skeleton-with-react!](/preview.png)
+
 ## Project setup
 
 ```
